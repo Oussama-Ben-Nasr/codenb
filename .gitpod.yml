@@ -1,0 +1,11 @@
+image:
+    file: .gitpod.dockerfile
+
+tasks:
+  - init: echo "Running redis in the bg"
+    command: redis-server --daemonize yes
+
+  - init: bin/setup
+    command: bin/rails server
+
+
