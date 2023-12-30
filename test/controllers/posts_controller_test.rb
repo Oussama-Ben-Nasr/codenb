@@ -1,4 +1,5 @@
 require "test_helper"
+require 'socket'
 
 class PostsControllerTest < ActionDispatch::IntegrationTest
   setup do

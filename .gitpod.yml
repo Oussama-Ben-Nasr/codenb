@@ -1,0 +1,14 @@
+image:
+    file: .gitpod.dockerfile
+
+tasks:
+  - init: echo "Running redis in the bg"
+    command: redis-server --daemonize yes
+  
+  - init: echo "using Ruby 3.2.0"
+    command: rvm install 3.2.0 && bash --login && rvm use 3.2.0
+
+  - init: bin/setup
+    command: bin/rails server
+
+
