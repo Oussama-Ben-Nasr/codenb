@@ -1,0 +1,48 @@
+- hosts: localhost
+  tasks:
+    - name: Install required packages.
+      tags: pkgs
+      ansible.builtin.package:
+        name:
+          - apache2
+          - firewalld
+        state: present
+
+    - name: Start services.
+      tags: services
+      ansible.builtin.service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      loop:
+        - apache2
+        - firewalld
+
+    - name: Check to see if there is already an index.html file.
+      tags: index
+      ansible.builtin.stat:
+        path: /var/www/html/index.html
+      register: index
+
+    - name: Create custom index page, if one is not already there.
+      tags: index
+      ansible.builtin.copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+      when: index.stat.exists == False
+
+    - name: Allow http (80/tcp) traffic through the firewall.
+      tags: firewall
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        permanent: true
+        immediate: true
+
+    - name: Allow https (443/tcp) traffic through the firewall.
+      tags: firewall
+      ansible.posix.firewalld:
+        service: https
+        state: enabled
+        permanent: true
+        immediate: true
