@@ -27,3 +27,9 @@ jobs:
         run: bundle exec rails db:prepare
       - name: Run tests
         run: bundle exec rake
+      - name: Deploy on CodenbVM
+        run: bash .github/workflows/deploy.sh -u $CODENB_USER -a $CODENB_ADDRESS -k $CODENB_PK -w 1 -r 3
+        env:
+            CODENB_ADDRESS: ${{ secrets.CODENB_ADDRESS }}
+            CODENB_USER: ${{ secrets.CODENB_USER }}
+            CODENB_PK: ${{ secrets.CODENB_PK }}
