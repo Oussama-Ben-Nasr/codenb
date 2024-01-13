@@ -12,8 +12,9 @@ no_color='\033[0m'
 ## function to ssh into codenb_vm
 function codenb_ssh() {
     ssh -tt "$username@$address" -i .codenbvm/key.pem -o StrictHostKeyChecking=no << EOT
-    mkdir -p itworked
-    touch itworked/1.txt
+    sudo ansible-playbook codenb/ansible-deployment/site.yaml
+    chmod +x codenb/.github/workflows/bootstrap.sh
+    ./codenb/.github/workflows/bootstrap.sh&
     exit 0
 EOT
 }
