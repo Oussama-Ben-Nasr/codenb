@@ -34,3 +34,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 /.codenbvm
+
+# Ignore mega integration code
+/mega/*
+
+# Ignore local txt files
+*.txt
